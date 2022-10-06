@@ -45,6 +45,10 @@ const initModels = () => {
 	ProductInCart.hasMany(ProductImgs, { foreignKey: 'productId' });
 	ProductImgs.belongsTo(ProductInCart);
 
+	// 1 Cart <--> M ProductInCart
+	Cart.hasMany(ProductInCart);
+	ProductInCart.belongsTo(Cart);
+
 };
 
  module.exports = { initModels };

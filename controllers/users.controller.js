@@ -106,28 +106,13 @@ const getUserPurchase = catchAsync(async (req, res, next) => {
 	const { sessionUser } = req;
 	const { user } = req;
 
-	const users = await User.findAll({
-		attributes: { exclude: ['password'] },
-		where: { status: 'active', userId : sessionUser.id },
-		include: [
-			{model: 
-				Order, 
-				required: false, 
-				include: {
-					model: Cart,
-					required: false,
-					include: {
-						model: ProductInCart, 
-						required: false,
-						include: {
-							model: ProductImg,
-							required: false,
-						}
-					}
-				}
-			}
-		]
-	});
+	Cart.findOne({ 
+		where: {status: 'active', userId: sessionUser.id}
+	})
+
+	if(!cart){
+		return next(new AppError('This user does not have a cart',400))
+	}
 
 	res.status(200).json({
 		status: 'success',
