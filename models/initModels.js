@@ -18,20 +18,8 @@ const initModels = () => {
 	Order.belongsTo(User);
 
 	// 1 user <-----------> 1 cart
-	User.hasOne(Cart, {
-	foreignKey: 'userId'
-	});
+	User.hasOne(Cart, {	foreignKey: 'userId'});
 	Cart.belongsTo(User);
-
-	// 1 cart <-----------> 1 order
-	Cart.hasOne(Order, {
-		foreignKey: 'cartId'
-	});
-	Order.belongsTo(Cart);
-
-	// 1 Cart <----> M Products
-	Cart.hasMany(ProductInCart, { foreignKey: 'cartId' });
-	ProductInCart.belongsTo(Cart);
 
 	// 1 Product <----> M Imgs
 	Product.hasMany(ProductImgs, { foreignKey: 'productId' });
@@ -41,13 +29,32 @@ const initModels = () => {
 	Category.hasOne(Product);
 	Product.belongsTo(Category);
 
-	// 1 products in Cart <----> M ProductsImgs*
-	ProductInCart.hasMany(ProductImgs, { foreignKey: 'productId' });
-	ProductImgs.belongsTo(ProductInCart);
-
-	// 1 Cart <--> M ProductInCart
+	//1Cart <---------->1 productInCart
 	Cart.hasMany(ProductInCart);
 	ProductInCart.belongsTo(Cart);
+	// 1 cart <-----------> 1 order
+
+	 // 1 Product <--> 1 ProductInCart
+	 Product.hasOne(ProductInCart);
+	 ProductInCart.belongsTo(Product);
+
+	// 1 Order <----------> 1 Cart
+	Cart.hasOne(Order, {foreignKey: 'cartId'});
+	Order.belongsTo(Cart);
+
+
+
+
+
+
+
+	
+
+	
+	
+
+
+	
 
 };
 
